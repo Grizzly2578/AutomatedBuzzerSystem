@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!--==================== BOXICONS ====================-->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
+    />
+
+    <!--==================== CSS =========================-->
+    <link rel="stylesheet" href="/style.css" />
+
+    <!--==================== Loader CSS ===================-->
+    <link rel="stylesheet" href="/loader.css" />
+    <title>Clock Ui</title>
+  </head>
+  <body>
+    <div class="loader">
+      <div class="box box0">
+      <div></div>
+      </div>
+      <div class="box box1">
+      <div></div>
+      </div>
+      <div class="box box2">
+      <div></div>
+      </div>
+      <div class="box box3">
+      <div></div>
+      </div>
+      <div class="box box4">
+      <div></div>
+      </div>
+      <div class="box box5">
+      <div></div>
+      </div>
+      <div class="box box6">
+      <div></div>
+      </div>
+      <div class="box box7">
+      <div></div>
+      </div>
+      <div class="ground">
+      <div></div>
+      </div>
+    </div>
+    <section class="clock container">
+      <div class="clock__container grid">
+        <div class="clock__content grid">
+          <div class="clock__circle">
+            <span class="clock__twelve"></span>
+            <span class="clock__three"></span>
+            <span class="clock__six"></span>
+            <span class="clock__nine"></span>
+
+            <div class="clock__rounder"></div>
+            <div class="clock__hour" id="clock-hour"></div>
+            <div class="clock__minutes" id="clock-minutes"></div>
+            <div class="clock__seconds" id="clock-seconds"></div>
+
+            <!-- Dark/light button -->
+            <div class="clock__theme">
+              <i class="bx bxs-moon" id="theme-button"></i>
+            </div>
+          </div>
+
+          <div>
+            <div class="clock__text">
+              <div class="clock__text-hour" id="text-hour"></div>
+              <div class="clock__text-minutes" id="text-minutes"></div>
+              <div class="clock__text-ampm" id="text-ampm"></div>
+            </div>
+
+            <div class="clock__date">
+              <!-- <span id="date-day-week"></span> -->
+              <span id="date-day"></span>
+              <span id="date-month"></span>
+              <span id="date-year"></span>
+            </div>
+
+            <ul class="alarm-list" id="alarm-list">
+              <!-- Alarms will be added here dynamically -->
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer">
+          <div class="button-container">
+            <button
+              id="add-alarm"
+              class="clock__add__alarm bx bxs-alarm-add"
+              popovertarget="add_alarm_modal"
+              onclick="openModal()"
+            ></button>
+            <button
+              id="set-time"
+              class="clock__set__time bx bxs-cog"
+              popovertarget="add_alarm_modal"
+              onclick="openSetTimeModal()"
+            ></button>
+          </div>
+          <a
+            href="https://facebook.com/noahvsitoy1/"
+            target="_blank"
+            class="clock__logo"
+            >Grizzly2578</a
+          >
+        </div>
+        <div class="modal-container">
+          <div popover id="add_alarm_modal" class="modal">
+            <div class="modal-content">
+              <button class="btn" id="save-new-alarm-btn">Done</button>
+              <button class="close" onclick="closeModal()">Cancel</button>
+              <h2 class="h2">Add Alarm</h2>
+
+              <div class="alarm-form">
+                <input type="time" class="alarm-input" id="new-alarm-time" />
+                <div class="alarm-form-days-selector">
+                  <h4 class="h4">Repeat</h1>
+                    <div class="weekday-selector" id="new-weekday-selector">
+                      <input type="checkbox" id="sunday" value="0" />
+                      <label for="sunday">S</label>
+                      <input type="checkbox" id="monday" value="1" />
+                      <label for="monday">M</label>
+                      <input type="checkbox" id="tuesday" value="2" />
+                      <label for="tuesday">T</label>
+                      <input type="checkbox" id="wednesday" value="3" />
+                      <label for="wednesday">W</label>
+                      <input type="checkbox" id="thursday" value="4" />
+                      <label for="thursday">T</label>
+                      <input type="checkbox" id="friday" value="5" />
+                      <label for="friday">F</label>
+                      <input type="checkbox" id="saturday" value="6" />
+                      <label for="saturday">S</label>
+                    </div>
+                </div>
+                <div class="alarm-form-input">
+                  <input
+                    type="text"
+                    class="alarm-input"
+                    id="new-alarm-label"
+                    placeholder="Alarm Name"
+                  />
+                  <input
+                    type="number"
+                    class="alarm-input"
+                    id="new-alarm-duration"
+                    placeholder="Duration ( Miliseconds )"
+                    min="1"
+                  />
+                  <input
+                    type="number"
+                    class="alarm-input"
+                    id="new-alarm-repeat"
+                    placeholder="Buzzer Repeat Count"
+                    min="1"
+                  />
+                  <input
+                    type="number"
+                    class="alarm-input"
+                    id="new-alarm-delay"
+                    placeholder="Buzzer Repeat Delay ( Miliseconds )"
+                    min="1"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div popover id="set_time_modal" class="modal">
+            <div class="modal-content">
+              <button class="btn" id="save-new-time-btn">Done</button>
+              <button class="close" onclick="closeModal()">Cancel</button>
+              <div class="alarm-form">
+                <input type="datetime-local" id="time-input"/>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!--==================== MAIN JS ====================-->
+    <script src="/main.js"></script>
+  </body>
+</html>

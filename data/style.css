@@ -1,0 +1,827 @@
+/*=============== GOOGLE FONTS ===============*/
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap");
+
+/*=============== VARIABLES CSS ===============*/
+:root {
+	/*========== Colors ==========*/
+	--hue-color: 240;
+
+	--first-color: hsl(var(--hue-color), 53%, 49%);
+	--title-color: hsl(var(--hue-color), 53%, 15%);
+	--text-color: hsl(var(--hue-color), 12%, 35%);
+	--text-color-light: hsl(var(--hue-color), 12%, 65%);
+	--white-color: #fff;
+	--body-color: hsl(var(--hue-color), 24%, 94%);
+
+	/*========== Font and typography ==========*/
+	--body-font: "Poppins", sans-serif;
+	--biggest-font-size: 3rem;
+	--small-font-size: 0.813rem;
+	--smaller-font-size: 0.75rem;
+	--tiny-font-size: 0.625rem;
+
+	/*========== Font weight ==========*/
+	--font-medium: 500;
+
+	/*========== Margenes Bottom ==========*/
+	--mb-0-25: 0.25rem;
+	--mb-1: 1rem;
+	--mb-1-5: 1.5rem;
+	--mb-2-5: 2.5rem;
+
+	/*========== z index ==========*/
+	--z-normal: 1;
+	--z-tooltip: 10;
+}
+
+@media screen and (min-width: 968px) {
+	:root {
+		--biggest-font-size: 3.5rem;
+		--small-font-size: 0.875rem;
+		--smaller-font-size: 0.813rem;
+		--tiny-font-size: 0.75rem;
+	}
+}
+
+/*========== Variables Dark theme ==========*/
+body.dark-theme {
+	--title-color: hsl(var(--hue-color), 12%, 95%);
+	--text-color: hsl(var(--hue-color), 12%, 75%);
+	--body-color: hsl(var(--hue-color), 10%, 16%);
+}
+
+.clock.container {
+    display: none;
+}
+
+/*========== Button Dark/Light ==========*/
+.clock__theme {
+	position: absolute;
+	top: -1rem;
+	right: -1rem;
+	display: flex;
+	padding: 0.25rem;
+	border-radius: 50%;
+	box-shadow: inset -1px -1px 1px hsla(var(--hue-color), 0%, 100%, 1),
+		inset 1px 1px 1px hsla(var(--hue-color), 30%, 86%, 1);
+	color: var(--first-color);
+	cursor: pointer;
+	transition: 0.4s;
+}
+
+/*========== Box shadow Dark theme ==========*/
+.dark-theme .clock__circle {
+	box-shadow: 6px 6px 16px hsla(var(--hue-color), 8%, 12%, 1),
+		-6px -6px 16px hsla(var(--hue-color), 8%, 20%, 1),
+		inset -6px -6px 16px hsla(var(--hue-color), 8%, 20%, 1),
+		inset 6px 6px 12px hsla(var(--hue-color), 8%, 12%, 1);
+}
+
+.dark-theme .clock__theme {
+	box-shadow: inset -1px -1px 1px hsla(var(--hue-color), 8%, 20%, 1),
+		inset 1px 1px 1px hsla(var(--hue-color), 8%, 12%, 1);
+}
+
+/*=============== BASE ===============*/
+* {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	margin: 0;
+	font-family: var(--body-font);
+	background-color: var(--body-color);
+	color: var(--text-color);
+	transition: 0.4s;
+}
+
+a {
+	text-decoration: none;
+}
+
+/*=============== REUSABLE CSS CLASSES ===============*/
+.container {
+	max-width: 968px;
+	margin-left: var(--mb-1);
+	margin-right: var(--mb-1);
+}
+
+.grid {
+	display: grid;
+}
+
+/*=============== CLOCK ===============*/
+.clock__container {
+	height: 100vh;
+	grid-template-rows: 1fr max-content;
+}
+
+.clock__circle {
+	position: relative;
+	width: 200px;
+	height: 200px;
+	box-shadow: -6px -6px 16px var(--white-color),
+		6px 6px 16px hsla(var(--hue-color), 30%, 86%, 1),
+		inset 6px 6px 16px hsla(var(--hue-color), 30%, 86%, 1),
+		inset -6px -6px 16px var(--white-color);
+	border-radius: 50%;
+	justify-self: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transition: 0.4s;
+}
+
+.clock__content {
+	margin-top: 50px;
+	align-self: flex-start;
+	row-gap: 3.5rem;
+}
+
+.clock__twelve,
+.clock__three,
+.clock__six,
+.clock__nine {
+	position: absolute;
+	width: 1rem;
+	height: 1px;
+	background-color: var(--text-color-light);
+}
+
+.clock__twelve,
+.clock__six {
+	transform: translateX(-50%) rotate(90deg);
+}
+
+.clock__twelve {
+	top: 1.25rem;
+	left: 50%;
+}
+
+.clock__three {
+	top: 50%;
+	right: 0.75rem;
+}
+
+.clock__six {
+	bottom: 1.25rem;
+	left: 50%;
+}
+
+.clock__nine {
+	left: 0.75rem;
+	top: 50%;
+}
+
+.clock__rounder {
+	width: 0.75rem;
+	height: 0.75rem;
+	background-color: var(--first-color);
+	border-radius: 50%;
+	border: 2px solid var(--body-color);
+	z-index: var(--z-tooltip);
+}
+
+.clock__hour,
+.clock__minutes,
+.clock__seconds {
+	position: absolute;
+	display: flex;
+	justify-content: center;
+}
+
+.clock__hour {
+	width: 105px;
+	height: 105px;
+	transition: transform 0.05s linear;
+}
+
+.clock__hour::before {
+	content: "";
+	position: absolute;
+	background-color: var(--text-color);
+	width: 0.25rem;
+	height: 3rem;
+	border-radius: 0.75rem;
+	z-index: var(--z-normal);
+}
+
+.clock__minutes {
+	width: 136px;
+	height: 136px;
+	transition: transform 0.05s linear;
+}
+
+.clock__minutes::before {
+	content: "";
+	position: absolute;
+	background-color: var(--text-color);
+	width: 0.25rem;
+	height: 4rem;
+	border-radius: 0.75rem;
+	z-index: var(--z-normal);
+}
+
+.clock__seconds {
+	width: 130px;
+	height: 130px;
+	transition: transform 1s linear; /* Smooth transition */
+}
+
+#clock-seconds {
+    transition: transform 0.05s linear;
+}
+
+.clock__seconds::before {
+	content: "";
+	position: absolute;
+	background-color: var(--first-color);
+	width: 0.125rem;
+	height: 5rem;
+	border-radius: 0.75rem;
+	z-index: var(--z-normal);
+}
+
+.clock__logo {
+	width: max-content;
+	justify-self: center;
+	margin-bottom: var(--mb-2-5);
+	font-size: var(--smaller-font-size);
+	font-weight: var(--font-medium);
+	color: var(--text-color-light);
+	transition: 0.3s;
+}
+
+.clock__logo:hover {
+	color: var(--first-color);
+}
+
+.clock__text {
+	display: flex;
+	justify-content: center;
+}
+
+.clock__text-hour,
+.clock__text-minutes {
+	font-size: var(--biggest-font-size);
+	font-weight: var(--font-medium);
+	color: var(--title-color);
+}
+
+.clock__text-ampm {
+	font-size: var(--tiny-font-size);
+	color: var(--title-color);
+	font-weight: var(--font-medium);
+	margin-left: var(--mb-0-25);
+}
+
+.clock__date {
+	text-align: center;
+	font-size: var(--small-font-size);
+	font-weight: var(--font-medium);
+	margin-bottom: 15px;
+}
+
+.alarm-list {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	list-style-type: none;
+}
+
+.alarm-item {
+	position: relative;
+	padding: 1em;
+	cursor: pointer;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 15px;
+	margin-bottom: 10px;
+	background-color: rgba(255, 255, 255, 0.301);
+	overflow: hidden;
+
+	box-shadow: 4px 4px 10px rgb(29, 29, 29);
+	border-radius: 12px;
+	transition: transform 0.3s ease;
+}
+/* .......................Bin.........................*/
+
+.bin-button {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 2.5rem;
+	height: 2.5rem;
+	border-radius: 50%;
+	background-color: var(--hue-color);
+	cursor: pointer;
+	border: none;
+	transition-duration: 0.3s;
+	position: relative;
+	margin-left: 10px; /* Add margin to separate from the switch */
+}
+.bin-bottom {
+	width: 15px;
+	z-index: 2;
+}
+.bin-top {
+	width: 17px;
+	transform-origin: right;
+	transition-duration: 0.3s;
+	z-index: 2;
+}
+.bin-button:hover .bin-top {
+	transform: rotate(45deg);
+}
+.bin-button:active {
+	transform: scale(0.9);
+}
+.garbage {
+	position: absolute;
+	width: 14px;
+	height: auto;
+	z-index: 1;
+	opacity: 0;
+	transition: all 0.3s;
+}
+.bin-button:hover .garbage {
+	animation: throw 0.4s linear;
+}
+@keyframes throw {
+	from {
+		transform: translate(-400%, -700%);
+		opacity: 0;
+	}
+	to {
+		transform: translate(0%, 0%);
+		opacity: 1;
+	}
+}
+
+.alarm_item_background {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.1); /* Adjust background color as needed */
+	z-index: 0; /* Places it behind other elements */
+}
+
+/* The switch - the box around the slider */
+.switch {
+	font-size: 17px;
+	position: relative;
+	display: inline-block;
+	width: 50px;
+	height: 25px;
+  }
+  
+  /* Hide default HTML checkbox */
+  .switch input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+  }
+  
+  /* The slider */
+  .slider {
+	position: absolute;
+	cursor: pointer;
+	inset: 0;
+	background: #9fccfa;
+	border-radius: 50px;
+	transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	}
+  
+	.slider:before {
+		position: absolute;
+		content: "";
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 25px;
+		width: 25px;
+		left: 0; /* Change from inset to left */
+		background-color: white;
+		border-radius: 50px;
+		box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+		transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+		}
+  
+  .switch input:checked + .slider {
+	background: #0974f1;
+  }
+  
+  .switch input:focus + .slider {
+	box-shadow: 0 0 1px #0974f1;
+  }
+  
+  .switch input:checked + .slider:before {
+	transform: translateX(1.6em);
+  }
+
+#alarm-text,
+.remove-alarm-btn,
+.switch {
+	position: relative; /* Ensures these elements are above the background */
+	z-index: 6;
+}
+
+@media screen and (min-width: 430px) {
+	.alarm-item {
+		width: 90%;
+	}
+}
+
+.footer {
+    margin-top: 0px;
+    height: 50px;
+    background-color: none;
+    position: fixed;
+    z-index: 5;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column; /* Changed to column */
+    align-items: center;
+    justify-content: center;
+    margin-top: var(--mb-2-5);
+}
+.button-container {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap: 0.8rem;
+  }
+#remove-alarm2{
+	margin-bottom: var(--mb-1);
+}
+
+.clock__add__alarm {
+    width: 2.5rem;
+    border: none;
+    background-color: var(--body-color);
+    display: flex;
+    padding: 0.25rem;
+    border-radius: 50%;
+    box-shadow: inset -1px -1px 1px hsla(var(--hue-color), 0%, 100%, 1),
+        inset 1px 1px 1px hsla(var(--hue-color), 30%, 86%, 1);
+    color: var(--first-color);
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+.clock__set__time {
+    width: 2.5rem;
+    border: none;
+    background-color: var(--body-color);
+    display: flex;
+    padding: 0.25rem;
+    border-radius: 50%;
+    box-shadow: inset -1px -1px 1px hsla(var(--hue-color), 0%, 100%, 1),
+        inset 1px 1px 1px hsla(var(--hue-color), 30%, 86%, 1);
+    color: var(--first-color);
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+body.dark-theme .clock__set__time {
+    box-shadow: inset -1px -1px 1px hsla(var(--hue-color), 0%, 20%, 1),
+                inset 1px 1px 1px hsla(var(--hue-color), 30%, 10%, 1);
+}
+.clock__logo {
+    width: max-content;
+    justify-self: center;
+    margin-bottom: var(--mb-2-5);
+    font-size: var(--smaller-font-size);
+    font-weight: var(--font-medium);
+    color: var(--text-color-light);
+    transition: 0.3s;
+}
+.bxs-alarm-add {
+	font-size: 2rem;
+	justify-self: center;
+}
+
+.bxs-cog {
+	font-size: 2rem;
+	justify-self: center;
+}
+
+.modal {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 1000; /* Sit on top */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+	align-items: center;
+	justify-content: center;
+	transition: opacity 0.3s ease; /* Smooth transition */
+}
+
+.modal.fade-out {
+	opacity: 0;
+	transition: opacity 0.3s ease; /* Smooth transition */
+}
+
+.modal-content {
+	background-color: var(--body-color);
+	padding: 20px;
+	border: none;
+	border-radius: 10px; /* Rounded corners */
+	width: 80%;
+	max-width: 500px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+	transition: transform 0.3s ease; /* Smooth transition */
+}
+
+.show-modal {
+	-webkit-animation: scale-up-center 0.4s cubic-bezier(0.39, 0.575, 0.565, 1)
+		both;
+	animation: scale-up-center 0.4s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+}
+
+.scale-out-center {
+	-webkit-animation: scale-out-center 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53)
+		both;
+	animation: scale-out-center 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
+}
+
+@-webkit-keyframes scale-up-center {
+	0% {
+		-webkit-transform: scale(0.5);
+		transform: scale(0.5);
+	}
+	100% {
+		-webkit-transform: scale(1);
+		transform: scale(1);
+	}
+}
+
+@keyframes scale-up-center {
+	0% {
+		-webkit-transform: scale(0.5);
+		transform: scale(0.5);
+	}
+	100% {
+		-webkit-transform: scale(1);
+		transform: scale(1);
+	}
+}
+
+/* ----------------------------------------------
+ * animation scale-down-center
+ * ---------------------------------------------- */
+@-webkit-keyframes scale-out-center {
+	0% {
+		-webkit-transform: scale(1);
+		transform: scale(1);
+		opacity: 1;
+	}
+	100% {
+		-webkit-transform: scale(0);
+		transform: scale(0);
+		opacity: 1;
+	}
+}
+@keyframes scale-out-center {
+	0% {
+		-webkit-transform: scale(1);
+		transform: scale(1);
+		opacity: 1;
+	}
+	100% {
+		-webkit-transform: scale(0);
+		transform: scale(0);
+		opacity: 1;
+	}
+}
+
+.modal-content h2 {
+	margin-top: 0;
+	font-size: 1.5rem;
+	color: var(--title-color);
+}
+.modal-content .close {
+	background: none;
+	border: none;
+	color: var(--text-color);
+	float: left;
+	font-size: 1.5rem;
+	font-weight: lighter;
+	cursor: pointer;
+	transition: color 0.3s ease; /* Smooth transition */
+}
+
+.modal-content .h2 {
+	color: var(--text-color);
+	font-size: 1.5rem;
+	font-weight: bold;
+	transition: color 0.3s ease; /* Smooth transition */
+	text-align: center;
+}
+
+.modal-content .btn {
+	background: none;
+	border: none;
+	color: var(--text-color);
+	float: right;
+	font-size: 1.5rem;
+	font-weight: lighter;
+	cursor: pointer;
+	transition: color 0.3s ease; /* Smooth transition */
+}
+
+.modal-content .btn:hover,
+.modal-content .btn:focus {
+	color: var(--first-color); /* Change color on hover/focus */
+}
+
+.modal-content .close:hover,
+.modal-content .close:focus {
+	color: var(--first-color); /* Change color on hover/focus */
+}
+
+.modal-content .alarm-input {
+	width: 100%;
+	padding: 10px;
+	margin: 10px 0;
+	border: 1px solid var(--text-color-light);
+	border-radius: 5px;
+	box-sizing: border-box;
+}
+
+.modal-content .alarm-input:focus {
+	border-color: var(--first-color);
+	outline: none;
+}
+
+.alarm-form-days-selector {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	justify-content: center;
+	margin-bottom: 10px;
+
+	border-radius: 10px;
+
+	background-color: rgba(
+		82,
+		81,
+		81,
+		0.212
+	); /* Add this line to set the background color */
+}
+.dark-theme .alarm-form-days-selector {
+	background-color: rgba(182, 182, 182, 0.212);
+}
+.alarm-form h4 {
+	text-align: left;
+	color: var(--text-color);
+}
+#new-weekday-selector {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+#new-weekday-selector label {
+	display: inline-block;
+	margin: 5px;
+	position: relative;
+}
+
+#new-weekday-selector input[type="checkbox"] {
+	display: none;
+}
+
+#new-weekday-selector input[type="checkbox"] + label {
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	background-color: var(--white-color);
+	color: var(--text-color);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#new-weekday-selector input[type="checkbox"]:checked + label {
+	background-color: var(--first-color);
+	color: var(--white-color);
+}
+
+@media screen and (max-width: 430px) {
+	.alarm-item {
+		width: 90%;
+	}
+	#new-weekday-selector input[type="checkbox"] + label {
+		width: 25px; /* Adjust size for smaller screens */
+		height: 25px; /* Adjust size for smaller screens */
+		margin: 3px; /* Adjust margin for smaller screens */
+	}
+}
+.alarm-form-input {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
+	border-radius: 10px;
+
+	background-color: rgba(
+		82,
+		81,
+		81,
+		0.212
+	); /* Add this line to set the background color */
+}
+.dark-theme .alarm-form-input {
+	background-color: rgba(182, 182, 182, 0.212);
+	color: white;
+}
+#new-alarm-label {
+	color: var(--text-color);
+	border: none;
+	background: none;
+	border-bottom: 1px solid var(--text-color-light);
+	border-bottom-left-radius: 0; /* Ensure bottom border is not rounded */
+	border-bottom-right-radius: 0; /* Ensure bottom border is not rounded */
+	margin-bottom: 10px; /* Optional: Add some space below the divider */
+}
+
+#new-alarm-duration {
+	color: var(--text-color);
+	border: none;
+	background: none;
+	border-bottom: 1px solid var(--text-color-light);
+	border-bottom-left-radius: 0; /* Ensure bottom border is not rounded */
+	border-bottom-right-radius: 0; /* Ensure bottom border is not rounded */
+}
+
+#new-alarm-repeat {
+	color: var(--text-color);
+	border: none;
+	background: none;
+	padding-top: 0px;
+}
+
+#new-alarm-delay {
+	color: var(--text-color);
+	border: none;
+	background: none;
+	padding-top: 0px;
+}
+
+#new-alarm-label,
+#new-alarm-duration,
+#new-alarm-repeat,
+#new-alarm-delay {
+	color: var(--text-color);
+	border: none;
+	background: none;
+	border-bottom: 1px solid var(--text-color-light);
+	border-bottom-left-radius: 0; /* Ensure bottom border is not rounded */
+	border-bottom-right-radius: 0; /* Ensure bottom border is not rounded */
+	margin: 10px 0; /* Add vertical margin */
+	margin-top: 30px;
+	padding: 0 10px; /* Add horizontal padding to create space for the border */
+	width: calc(100% - 30px); /* Adjust width to account for padding */
+}
+
+.dark-theme .clock__add__alarm {
+	box-shadow: inset -1px -1px 1px hsla(var(--hue-color), 8%, 20%, 1),
+		inset 1px 1px 1px hsla(var(--hue-color), 8%, 12%, 1);
+}
+/* ...existing code... */
+
+/*=============== MEDIA QUERIES ===============*/
+/* For large devices */
+@media screen and (min-width: 968px) {
+	.container {
+		margin-left: auto;
+		margin-right: auto;
+	}
+	.clock__logo {
+		margin-bottom: 3rem;
+	}
+	.alarm-item {
+		width: 50%;
+	}
+}
