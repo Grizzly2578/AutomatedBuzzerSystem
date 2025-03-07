@@ -234,11 +234,11 @@ void loop() {
     digitalWrite(RELAY_PIN, HIGH); // Turn off relay when button is released
   }
 
-  DateTime now = rtc.now();
-  if (now.hour() == 22 && now.minute() == 0) { // 10 PM
-    DateTime wakeTime(now.year(), now.month(), now.day() + 1, 4, 30, 0); // 4:30 AM next day
-    enterDeepSleepUntil(wakeTime);
-  }
+  // DateTime now = rtc.now();
+  // if (now.hour() == 22 && now.minute() == 0) { // 10 PM
+  //   DateTime wakeTime(now.year(), now.month(), now.day() + 1, 4, 30, 0); // 4:30 AM next day
+  //   enterDeepSleepUntil(wakeTime);
+  // }
 
-  delay(100);
+  // delay(100);
 }
