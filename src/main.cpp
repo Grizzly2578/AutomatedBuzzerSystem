@@ -163,16 +163,16 @@ void triggerbuzzer(int duration, int repeat, int _delay) {
   }
 }
 
-void checkAlarms() {
+bool checkAlarms() {
   DateTime now = rtc.now();
   File file = SPIFFS.open("/alarms.json", "r");
-  if (!file) return;
+  if (!file) return false;
 
   StaticJsonDocument<1024> doc;
   DeserializationError error = deserializeJson(doc, file);
   file.close();
   
-  if (error) return;
+  if (error) return false;
 
   JsonArray alarms = doc.as<JsonArray>();  // Direct array, not doc["alarms"]
   
@@ -206,12 +206,13 @@ void checkAlarms() {
               serializeJson(doc, wFile);
               wFile.close();
             }
-            break;
+            return true; // Alarm triggered
           }
         }
       }
     }
   }
+  return false; // No alarms triggered
 }
 
 void loop() {

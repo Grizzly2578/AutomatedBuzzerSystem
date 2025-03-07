@@ -240,23 +240,22 @@ function openSetTimeModal (isEditing = false) {
 }
 // Function to close the modal
 function closeModal() {
-	modalContent.classList.remove("show-modal");
-	modalContent.classList.add("scale-out-center");
-	setTimeout(() => {
-		modal.style.display = "none";
-		setTimeModal.style.display = "none";
-		modalContent.classList.remove("scale-out-center");
-	}, 500); // Duration of the scale-out-center animation
+    console.log("Closing modal");
+    modalContent.classList.remove("show-modal");
+    modalContent.classList.add("scale-out-center");
+    setTimeout(() => {
+        modal.style.display = "none";
+        setTimeModal.style.display = "none";
+        modalContent.classList.remove("scale-out-center");
+    }, 500); // Duration of the scale-out-center animation
 }
 
 // Close the modal when clicking outside of it
 window.onclick = function (event) {
-	if (event.target == modal) {
-		closeModal();
-	}
-	if (event.target == setTimeModal) {
-		closeModal();
-	}
+    console.log("Window clicked:", event.target);
+    if (event.target == modal || event.target == setTimeModal) {
+        closeModal();
+    }
 };
 
 // Activate / deactivate the theme manually with the button
@@ -600,6 +599,7 @@ function saveAlarms() {
         })
         .then((data) => {
             console.log("Alarms saved successfully:", data);
+			console.log(alarms);
             renderAlarms();
         })
         .catch((error) => console.error("Error saving alarms:", error));
