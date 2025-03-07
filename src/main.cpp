@@ -215,13 +215,29 @@ bool checkAlarms() {
   return false; // No alarms triggered
 }
 
+void enterDeepSleepUntil(DateTime wakeTime) {
+  DateTime now = rtc.now();
+  int sleepDuration = (wakeTime.unixtime() - now.unixtime()) * 1000000; // Convert to microseconds
+  if (sleepDuration > 0) {
+    esp_sleep_enable_timer_wakeup(sleepDuration);
+    esp_deep_sleep_start();
+  }
+}
+
 void loop() {
   server.handleClient();
   checkAlarms();
+  
   if (digitalRead(BUTTON_PIN) == LOW) {
     digitalWrite(RELAY_PIN, LOW); // Turn on relay when button is pressed
   } else {
     digitalWrite(RELAY_PIN, HIGH); // Turn off relay when button is released
+  }
+
+  DateTime now = rtc.now();
+  if (now.hour() == 22 && now.minute() == 0) { // 10 PM
+    DateTime wakeTime(now.year(), now.month(), now.day() + 1, 4, 30, 0); // 4:30 AM next day
+    enterDeepSleepUntil(wakeTime);
   }
 
   delay(100);
