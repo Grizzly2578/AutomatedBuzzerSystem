@@ -248,15 +248,6 @@ function closeModal() {
         modalContent.classList.remove("scale-out-center");
     }, 500); // Duration of the scale-out-center animation
 }
-
-// Close the modal when clicking outside of it
-window.onclick = function (event) {
-    console.log("Window clicked:", event.target);
-    if (event.target == modal || event.target == setTimeModal) {
-        closeModal();
-    }
-};
-
 // Activate / deactivate the theme manually with the button
 themeButton.addEventListener("click", () => {
 	// Add or remove the dark / icon theme
@@ -286,7 +277,7 @@ function closeModal() {
 
 // Close the modal when clicking outside of it
 window.onclick = function (event) {
-	if (event.target == modal) {
+	if (event.target == modal || event.target == setTimeModal) {
 		closeModal();
 	}
 };
