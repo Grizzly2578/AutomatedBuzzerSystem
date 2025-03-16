@@ -11,8 +11,8 @@ RTC_DS3231 rtc;
 #define RELAY_PIN 23
 #define BUTTON_PIN 13
 
-const char* ssid = "Converge 2.4G";
-const char* password = "nor.susansitoy";
+const char* ssid = "Starlink 5G";
+const char* password = "1Smartbro";
 WebServer server(80);
 
 void setup() {
@@ -32,8 +32,8 @@ void setup() {
     return;
   }
 
-  IPAddress local_IP(192, 168, 222, 69);
-  IPAddress gateway(192, 168, 222, 124);
+  IPAddress local_IP(192, 168, 1, 69);
+  IPAddress gateway(192, 168, 1, 1);
   IPAddress subnet(255, 255, 255, 0);
   
   WiFi.config(local_IP, gateway, subnet);
@@ -154,12 +154,29 @@ void setup() {
   }
 }
 
-void triggerbuzzer(int duration, int repeat, int _delay) {
-  for (int i = 0; i < repeat; i++) {
-    digitalWrite(RELAY_PIN, LOW);
-    delay(duration);
-    digitalWrite(RELAY_PIN, HIGH);
-    delay(_delay); // Add a delay between repeats if needed
+void triggerbuzzer(int repeat_long, int repeat_short) {
+  int long_buzzer = 2750;
+  int short_buzzer = 300;
+  int _delay = 500; // Set the delay between repeats
+
+  // Trigger long repeats first if repeat_long is not null
+  if (repeat_long > 0) {
+    for (int i = 0; i < repeat_long; i++) {
+      digitalWrite(RELAY_PIN, LOW);
+      delay(long_buzzer);
+      digitalWrite(RELAY_PIN, HIGH);
+      delay(_delay); // Add a delay between repeats if needed
+    }
+  }
+
+  // Trigger short repeats next if repeat_short is not null
+  if (repeat_short > 0) {
+    for (int i = 0; i < repeat_short; i++) {
+      digitalWrite(RELAY_PIN, LOW);
+      delay(short_buzzer);
+      digitalWrite(RELAY_PIN, HIGH);
+      delay(_delay); // Add a delay between repeats if needed
+    }
   }
 }
 
@@ -198,7 +215,7 @@ bool checkAlarms() {
                              String(now.day());
           
           if (lastRanDay != currentDate) {
-            triggerbuzzer(alarm["duration"].as<int>(), alarm["repeat"].as<int>(), alarm["delay"].as<int>());  // Use duration field
+            triggerbuzzer(alarm["repeat_long"].as<int>(), alarm["repeat_short"].as<int>());  // Use duration field
             
             alarm["lastRanDay"] = currentDate;
             File wFile = SPIFFS.open("/alarms.json", "w");

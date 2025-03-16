@@ -775,7 +775,13 @@ body.dark-theme .clock__set__time {
 	border-bottom-right-radius: 0; /* Ensure bottom border is not rounded */
 }
 
-#new-alarm-repeat {
+#new-alarm-repeat-long {
+	color: var(--text-color);
+	border: none;
+	background: none;
+	padding-top: 0px;
+}
+#new-alarm-repeat-short {
 	color: var(--text-color);
 	border: none;
 	background: none;
@@ -791,7 +797,8 @@ body.dark-theme .clock__set__time {
 
 #new-alarm-label,
 #new-alarm-duration,
-#new-alarm-repeat,
+#new-alarm-repeat-long,
+#new-alarm-repeat-short,
 #new-alarm-delay {
 	color: var(--text-color);
 	border: none;

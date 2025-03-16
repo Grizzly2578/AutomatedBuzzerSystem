@@ -193,9 +193,8 @@ function openModal(isEditing = false) {
         // Clear the form if not editing
         document.getElementById("new-alarm-time").value = "";
         document.getElementById("new-alarm-label").value = "";
-        document.getElementById("new-alarm-duration").value = "";
-        document.getElementById("new-alarm-repeat").value = "";
-		document.getElementById("new-alarm-delay").value = "";
+        document.getElementById("new-alarm-repeat-long").value = "";
+        document.getElementById("new-alarm-repeat-short").value = "";
     }
 
     modal.style.display = "flex";
@@ -616,9 +615,8 @@ function editAlarm(index) {
 	const alarm = alarms[index];
 	document.getElementById("new-alarm-time").value = alarm.time;
 	document.getElementById("new-alarm-label").value = alarm.label;
-	document.getElementById("new-alarm-duration").value = alarm.duration;
-	document.getElementById("new-alarm-repeat").value = alarm.repeat;
-	document.getElementById("new-alarm-delay").value = alarm.delay;
+	document.getElementById("new-alarm-repeat-long").value = alarm.repeat_long;
+	document.getElementById("new-alarm-repeat-short").value = alarm.repeat_short;
 	document
 		.querySelectorAll('#new-weekday-selector input[type="checkbox"]')
 		.forEach((checkbox, i) => {
@@ -636,16 +634,13 @@ const saveNewAlarmBtn = document.getElementById("save-new-alarm-btn");
 saveNewAlarmBtn.addEventListener("click", () => {
 	const time = document.getElementById("new-alarm-time").value;
 	const label = document.getElementById("new-alarm-label").value;
-	const duration = parseInt(
-		document.getElementById("new-alarm-duration").value,
+	const repeat_long = parseInt(
+		document.getElementById("new-alarm-repeat-long").value,
 		10
 	);
-	const repeat = parseInt(
-		document.getElementById("new-alarm-repeat").value,
+	const repeat_short = parseInt(
+		document.getElementById("new-alarm-repeat-short").value,
 		10
-	);
-	const delay = parseInt(
-		document.getElementById("new-alarm-delay").value,10
 	);
 	const weekdays = Array.from(
 		document.querySelectorAll('#new-weekday-selector input[type="checkbox"]')
@@ -658,26 +653,26 @@ saveNewAlarmBtn.addEventListener("click", () => {
 		alert("Please set a valid time for the alarm.");
 		return;
 	}
-	if (isNaN(duration) || duration <= 0) {
-		alert("Please enter a valid duration greater than 0.");
-		return;
-	}
 	if (weekdays.length === 0) {
 		alert("Please select at least one day for the alarm.");
 		return;
 	}
 
+	if (isNaN(repeat_long) && isNaN(repeat_short)) {
+        alert("Both long and short buzzer should not be empty at the same time.");
+        return;
+    }
+
 	// New alarm object
 	const alarm = {
 		time,
 		label: label || "Alarm",
-		duration,
 		weekdays,
 		active: true,
 		lastRanDay: null,
 		triggered: false,
-		repeat,
-		delay
+		repeat_long,
+		repeat_short
 	};
 
 	// Check if editing an existing alarm
