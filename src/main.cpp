@@ -11,8 +11,8 @@ RTC_DS3231 rtc;
 #define RELAY_PIN 23
 #define BUTTON_PIN 13
 
-const char* ssid = "Starlink 10G";
-const char* password = "1Smartbro";
+const char* ssid = "Converge 2.4G";
+const char* password = "nor.susansitoy";
 WebServer server(80);
 
 void setup() {
@@ -32,8 +32,8 @@ void setup() {
     return;
   }
 
-  IPAddress local_IP(192, 168, 1, 69);
-  IPAddress gateway(192, 168, 1, 1);
+  IPAddress local_IP(192, 168, 222, 69);
+  IPAddress gateway(192, 168, 222, 124);
   IPAddress subnet(255, 255, 255, 0);
   
   WiFi.config(local_IP, gateway, subnet);
