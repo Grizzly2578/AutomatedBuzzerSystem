@@ -156,7 +156,7 @@ void setup() {
 
 void triggerbuzzer(int repeat_long, int repeat_short) {
   int long_buzzer = 2750;
-  int short_buzzer = 300;
+  int short_buzzer = 450;
   int _delay = 500; // Set the delay between repeats
 
   // Trigger long repeats first if repeat_long is not null
