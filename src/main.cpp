@@ -11,8 +11,8 @@ RTC_DS3231 rtc;
 #define RELAY_PIN 23
 #define BUTTON_PIN 13
 
-const char* ssid = "Automatic Buzzer System";
-const char* password = "automaticsheesh";
+const char* ssid = "Starlink 5G";
+const char* password = "1Smartbro";
 WebServer server(80);
 
 void setup() {
