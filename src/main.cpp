@@ -11,8 +11,8 @@ RTC_DS3231 rtc;
 #define RELAY_PIN 23
 #define BUTTON_PIN 13
 
-const char* ssid = "Starlink 5G";
-const char* password = "1Smartbro";
+const char* ssid = "Ligma";
+const char* password = "12345678";
 WebServer server(80);
 
 void setup() {
@@ -36,7 +36,7 @@ void setup() {
   IPAddress gateway(192, 168, 1, 1);
   IPAddress subnet(255, 255, 255, 0);
   
-  WiFi.config(local_IP, gateway, subnet);
+  // WiFi.config(local_IP, gateway, subnet);
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
 
